@@ -1,8 +1,9 @@
 <?php
 
-namespace Classes;
+namespace App;
 
 use Exception;
+use PDO;
 
 /**
  * Класс для создания подключения к базе данных - паттерн Singleton
@@ -16,7 +17,20 @@ final class DBConnection
      * @throws \Exception
      */
     private function connect()
-    {
+    {  
+        $params = parse_ini_file(__DIR__ . '/../config/database.ini');
+        if(!$params){
+            throw new Exception('Error reading config database file');
+        }
+        $connStr = sprintf('pgsql:host=%s;port=%d;dbname=%s;user=%s;password=%s', 
+            $params['host'],
+            $params['port'],
+            $params['dbname'],
+            $params['user'],
+            $params['password'],
+        );
+        $conn = new PDO($connStr);
+        return $conn;
     }
 
     protected function __construct()
@@ -39,7 +53,7 @@ final class DBConnection
     /**
      * @throws Exception
      */
-    public static function get()
+    public static function get(): PDO
     {
         return self::getInstance()->connect();
     }

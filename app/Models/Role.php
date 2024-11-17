@@ -1,11 +1,11 @@
 <?php
 
-namespace Classes;
+namespace App\Models;
 
 /**
  * Класс для работы с ролями
  */
-class Role
+class Role extends Model
 {
     protected int $id;
     public string $name;

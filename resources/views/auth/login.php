@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Вход</h1>
-<form action="/auth.php" method="post">
+<form action="/auth" method="post">
     <p>
         <input type="email" name="email" placeholder="Почта" required>
     </p>

@@ -1,19 +1,19 @@
 <?php
 
-namespace Classes;
+namespace App\Models;
 
 /**
  * Класс для работы с комментариями/заметками 
  */
-class Comment
+class Comment extends Model
 {
     protected int $id;
     public int $task_id;
     public int $user_id;
-    public string $description;
+    public string $text;
     
     public function __construct()
     {
-
+        
     }
 }

@@ -1,13 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Менеджер задач</title>
-</head>
-<body>
-<h1>Менеджер задач</h1>
-<p><a href="/login.php">Войти</a></p>
-<p><a href="/registration.php">Регистрация</a></p>
-<p><a href="/tasks.php">Список задач</a></p>
-</body>
-</html>
+<?php
+
+use App\Helpers\Routes\Dispatcher;
+    
+
+    spl_autoload_register(function ($class) {
+        $file = __DIR__ . '/' . str_replace('\\', '/', $class) . '.php';
+        if (file_exists($file)) {
+            require $file;
+        }
+    });
+    session_start();
+    
+    if (!function_exists('is_auth')) {
+        function is_auth(): bool
+        {
+            return isset($_SESSION['user_id']);
+        }
+    }
+
+    include_once __DIR__ . '/routes/web.php';
+
+    $requestMethod = $_SERVER['REQUEST_METHOD'];
+    $requestUrl = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+
+    $dispatcher = new Dispatcher($requestMethod, $requestUrl);
+    $dispatcher->dispatch();
+
+/*    $dbconnection = new DBController();
+    $dbconnection->index(); */
